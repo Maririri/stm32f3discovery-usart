@@ -117,7 +117,10 @@ int main(void) {
                 "This is LF\n"
                 "ladder\ntest\r\n"
                 "\r\n\r\n Test UTF-8: \xd0\x9f\xd1\x80\xd0\xb8\xd0\xb2\xd0\xb5\xd1\x82\r\n"
-                "\r\n\r\n Test KOI-8: \xF0\xD2\xC9\xD7\xC5\xD4\r\n\r\n"
+                "\r\n\r\n Test UTF-8: привет"
+                "\r\n\r\n Test Windows-1251: \xCF\xF0\xE8\xE2\xE5\xF2\r\n\r\n"
+                "\r\n\r\n Test KOI-8R: \xF0\xD2\xC9\xD7\xC5\xD4\r\n\r\n"
+                "\r\n\r\n Test KOI-8U: \xF0\xD2\xC9\xD7\xA6\xD4\r\n\r\n"
                 "Ansi test. \x1b[1;32mThis must be bold green. \x1b[0;33m\x1b[44mThis must be yellow on blue."
                 "\x1b[0m This must be normal.\r\n"
                 "Echo test:";
@@ -128,7 +131,12 @@ int main(void) {
             HAL_StatusTypeDef status = HAL_UART_Receive(&huart1, &c, 1, 1);
             if (status == HAL_OK) {
                 HAL_UART_Transmit(&huart1, &c, 1, 100);
-//                HAL_UART_Transmit(&huart1, &c, 1, 100);
+
+                HAL_Delay(200);
+
+                char *data = "\nInput: ";
+                HAL_UART_Transmit(&huart1, data, 8, 100);
+                HAL_UART_Transmit(&huart1, &c, 1, 100);
             }
         }
         HAL_Delay(1000);
